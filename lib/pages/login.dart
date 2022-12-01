@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

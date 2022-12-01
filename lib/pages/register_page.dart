@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
@@ -19,54 +23,83 @@ class RegisterPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Register"),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 100,
+      body: SafeArea(
+        child: Center(
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 100,
+                ),
+                TextFormField(
+                    controller: usernameController,
+                    decoration: InputDecoration(hintText: 'Username'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Required field'; // || means or
+                      }
+                    }),
+                TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(hintText: 'Password'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Required field'; // || means or
+                      }
+                      return null;
+                    }),
+                TextFormField(
+                    controller: firstNameController,
+                    decoration: InputDecoration(hintText: 'First Name'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Required field'; // || means or
+                      }
+                    }),
+                TextFormField(
+                    controller: lastNameController,
+                    decoration: InputDecoration(hintText: 'Last Name'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Required field'; // || means or
+                      }
+                    }),
+
+                Spacer(),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      var didSignup = await context
+                          .read<AuthProvider>()
+                          .register(
+                              username: usernameController.text,
+                              password: passwordController.text);
+                      if (didSignup) {
+                        context.go("/");
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text("Sign up not successful")));
+                      }
+                    } else {
+                      print("form not valid");
+                    }
+                  },
+                  child: Text("Register"),
+                ),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 50),
+                //   child: CupertinoButton.filled(
+                //     child: Text("Register"),
+                //     onPressed: () {},
+                //   ),
+                // ),
+              ],
             ),
-            TextFormField(
-                controller: usernameController,
-                decoration: InputDecoration(hintText: 'Username'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Required field'; // || means or
-                  }
-                }),
-            TextFormField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(hintText: 'Password'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Required field'; // || means or
-                  }
-                  return null;
-                }),
-            TextFormField(
-                controller: firstNameController,
-                decoration: InputDecoration(hintText: 'First Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Required field'; // || means or
-                  }
-                }),
-            TextFormField(
-                controller: lastNameController,
-                decoration: InputDecoration(hintText: 'Last Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Required field'; // || means or
-                  }
-                }),
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: CupertinoButton.filled(
-                child: Text("Register"),
-                onPressed: () {},
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
