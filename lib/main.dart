@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/pages/home_page.dart';
 import 'package:flutter_foodiez_app/pages/login.dart';
 import 'package:flutter_foodiez_app/pages/register_page.dart';
+import 'package:flutter_foodiez_app/providers/category_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,13 +33,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CategoryProvider()),
+      ],
+      child: MaterialApp.router(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
       ),
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
     );
   }
 }
