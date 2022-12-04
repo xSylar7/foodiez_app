@@ -9,20 +9,25 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        children: [
-          Spacer(),
-          Text(
-            "Category Image",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text("${category.name}"),
-          ),
-          // Text("${category.description}"),
-        ],
+      child: InkWell(
+        onTap: () {
+          print("Card Pressed !");
+        },
+        child: Column(
+          children: [
+            Spacer(),
+            Text(
+              "Category Image",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text("${category.name}"),
+            ),
+            // Text("${category.description}"),
+          ],
+        ),
       ),
     );
   }

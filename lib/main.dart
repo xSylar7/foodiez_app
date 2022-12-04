@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/pages/home_page.dart';
 import 'package:flutter_foodiez_app/pages/login.dart';
 import 'package:flutter_foodiez_app/pages/register_page.dart';
+import 'package:flutter_foodiez_app/providers/auth_provider.dart';
 import 'package:flutter_foodiez_app/providers/category_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',

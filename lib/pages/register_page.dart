@@ -67,13 +67,15 @@ class RegisterPage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      var didSignup = await context
-                          .read<AuthProvider>()
-                          .register(
-                              username: usernameController.text,
-                              password: passwordController.text);
+                      var didSignup =
+                          await context.read<AuthProvider>().register(
+                                username: usernameController.text,
+                                password: passwordController.text,
+                                first_name: firstNameController.text,
+                                last_name: lastNameController.text,
+                              );
                       if (didSignup) {
-                        context.go("/");
+                        context.pop();
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             backgroundColor: Colors.red,
