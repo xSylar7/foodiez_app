@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
+import 'package:flutter_foodiez_app/providers/category_provider.dart';
+import 'package:flutter_foodiez_app/widgets/category_card.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -23,6 +25,21 @@ class HomePage extends StatelessWidget {
             color: Colors.red,
           ),
         ],
+      ),
+      body: SafeArea(
+        child: Container(
+          child: GridView.builder(
+            itemCount: context.watch<CategoryProvider>().categories.length,
+            itemBuilder: (context, index) => CategoryCard(
+              category: context.watch<CategoryProvider>().categories[index],
+            ),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              // childAspectRatio: MediaQuery.of(context).size.width /
+              //     (MediaQuery.of(context).size.height),
+            ),
+          ),
+        ),
       ),
     );
   }
