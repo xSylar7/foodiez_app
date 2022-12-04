@@ -83,4 +83,11 @@ class AuthProvider extends ChangeNotifier {
     username = tokenMap['username'];
     return true;
   }
+
+  void logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    username = null;
+    notifyListeners();
+  }
 }

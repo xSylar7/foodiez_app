@@ -10,74 +10,88 @@ class LoginPage extends StatelessWidget {
   final passwordController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
-
+// context.read<AuthProvider>().register
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
       ),
-      body: Center(
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 200,
+      //context.read<AuthProvider>().hasToken() == true
+      body: (context.watch<AuthProvider>().username != null)
+          ? Container(
+              child: Center(
+              child: CupertinoButton.filled(
+                child: Text("Logout"),
+                onPressed: () {
+                  context.read<AuthProvider>().logout();
+                },
               ),
-              TextFormField(
-                  controller: usernameController,
-                  decoration: InputDecoration(hintText: 'Username'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Required field'; // || means or
-                    }
-                  }),
-              TextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(hintText: 'Password'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Required field'; // || means or
-                    }
-                    return null;
-                  }),
-              Padding(
-                padding: const EdgeInsets.only(top: 50),
-                child: CupertinoButton.filled(
-                  child: Text("Login"),
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      var didlogin = await context.read<AuthProvider>().login(
-                          username: usernameController.text,
-                          password: passwordController.text);
-                      if (didlogin) {
-                        context.pop();
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text("Login not successful")));
-                      }
-                    } else {
-                      print("form not valid");
-                    }
-                  },
+            ))
+          : Center(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 200,
+                    ),
+                    TextFormField(
+                        controller: usernameController,
+                        decoration: InputDecoration(hintText: 'Username'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required field'; // || means or
+                          }
+                        }),
+                    TextFormField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(hintText: 'Password'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Required field'; // || means or
+                          }
+                          return null;
+                        }),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50),
+                      child: CupertinoButton.filled(
+                        child: Text("Login"),
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            var didlogin = await context
+                                .read<AuthProvider>()
+                                .login(
+                                    username: usernameController.text,
+                                    password: passwordController.text);
+                            if (didlogin) {
+                              context.pop();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text("Login not successful")));
+                            }
+                          } else {
+                            print("form not valid");
+                          }
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: CupertinoButton(
+                        child: Text("Register"),
+                        onPressed: () {
+                          context.replace('/register');
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: CupertinoButton(
-                  child: Text("Register"),
-                  onPressed: () {
-                    context.replace('/register');
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
