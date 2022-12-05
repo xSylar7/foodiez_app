@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/models/category_models.dart';
 
@@ -16,14 +18,18 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           children: [
             Spacer(),
-            Text(
-              "Category Image",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Image.network(
+              category.image,
+              height: 140,
+              width: 140,
             ),
             Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text("${category.name}"),
+              child: Text(
+                "${category.name}",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
             ),
             // Text("${category.description}"),
           ],

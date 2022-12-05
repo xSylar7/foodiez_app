@@ -1,25 +1,29 @@
 import 'dart:convert';
 
 class Catg {
+  int id;
   String name;
-  String description;
+  String image;
 
   Catg({
+    required this.id,
     required this.name,
-    required this.description,
+    required this.image,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
-      'description': description,
+      'image': image,
     };
   }
 
   factory Catg.fromMap(Map<String, dynamic> map) {
     return Catg(
+      id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
-      description: map['description'] ?? '',
+      image: map['image'] ?? '',
     );
   }
 
