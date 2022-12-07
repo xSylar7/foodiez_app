@@ -4,8 +4,7 @@ class Recipe {
   int id;
   String name;
   String ingredients;
-  String user;
-  String description;
+  int user;
   String image;
 
   Recipe({
@@ -13,7 +12,6 @@ class Recipe {
     required this.name,
     required this.ingredients,
     required this.user,
-    required this.description,
     required this.image,
   });
 
@@ -23,7 +21,6 @@ class Recipe {
       'name': name,
       'ingredients': ingredients,
       'user': user,
-      'description': description,
       'image': image,
     };
   }
@@ -33,8 +30,7 @@ class Recipe {
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
       ingredients: map['ingredients'] ?? '',
-      user: map['user'] ?? '',
-      description: map['description'] ?? '',
+      user: map['user']?.toInt() ?? 0,
       image: map['image'] ?? '',
     );
   }

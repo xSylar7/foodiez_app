@@ -41,6 +41,10 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push('/create_category'),
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
