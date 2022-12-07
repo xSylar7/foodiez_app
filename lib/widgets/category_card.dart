@@ -22,8 +22,9 @@ class CategoryCard extends StatelessWidget {
             Spacer(),
             Image.network(
               category.image,
-              height: 140,
-              width: 140,
+              height: 112,
+              width: double.infinity,
+              fit: BoxFit.cover,
             ),
             Spacer(),
             Padding(

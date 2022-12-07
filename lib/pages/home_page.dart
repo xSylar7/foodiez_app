@@ -28,16 +28,17 @@ class HomePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12),
           child: GridView.builder(
             itemCount: context.watch<CategoryProvider>().categories.length,
             itemBuilder: (context, index) => CategoryCard(
               category: context.watch<CategoryProvider>().categories[index],
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              // childAspectRatio: MediaQuery.of(context).size.width /
-              //     (MediaQuery.of(context).size.height),
-            ),
+                crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 22
+                // childAspectRatio: MediaQuery.of(context).size.width /
+                //     (MediaQuery.of(context).size.height),
+                ),
           ),
         ),
       ),
