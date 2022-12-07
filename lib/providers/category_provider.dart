@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/client.dart';
@@ -60,5 +63,18 @@ class CategoryProvider extends ChangeNotifier {
     // isLoading = false;
 
     notifyListeners();
+  }
+
+  Future<void> addCategory({
+    required String name,
+    required File image,
+  }) async {
+    var response = await Client.dio.post("/categories/add/",
+        data: FormData.fromMap({
+          "name": name,
+          "image": await MultipartFile.fromFile(image.path),
+        }));
+
+    loadCategories();
   }
 }

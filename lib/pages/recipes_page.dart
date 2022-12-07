@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_foodiez_app/providers/category_provider.dart';
-import 'package:flutter_foodiez_app/widgets/category_card.dart';
+import 'package:flutter_foodiez_app/providers/recipe_provider.dart';
+import 'package:flutter_foodiez_app/widgets/recipe_card.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class RecipesListPage extends StatelessWidget {
+  const RecipesListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Foodiez"),
+        title: Text("Recipes"),
         actions: [
           CupertinoButton(
             borderRadius: const BorderRadius.all(Radius.circular(150)),
@@ -29,9 +29,9 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           child: GridView.builder(
-            itemCount: context.watch<CategoryProvider>().categories.length,
-            itemBuilder: (context, index) => CategoryCard(
-              category: context.watch<CategoryProvider>().categories[index],
+            itemCount: context.watch<RecipeProvider>().recipes.length,
+            itemBuilder: (context, index) => RecipeCard(
+              recipe: context.watch<RecipeProvider>().recipes[index],
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -40,10 +40,6 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/create_category'),
-        child: Icon(Icons.add),
       ),
     );
   }

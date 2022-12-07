@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_foodiez_app/models/recipe_models.dart';
+import 'package:flutter_foodiez_app/pages/create_category_page.dart';
+import 'package:flutter_foodiez_app/pages/recipe_detail.dart';
+import 'package:flutter_foodiez_app/pages/recipes_page.dart';
+import 'package:flutter_foodiez_app/providers/recipe_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +40,20 @@ final router = GoRouter(
       path: '/register',
       builder: (context, state) => RegisterPage(),
     ),
+    GoRoute(
+      path: '/recipes',
+      builder: (context, state) => RecipesListPage(),
+    ),
+    GoRoute(
+      path: '/recipe_detail',
+      builder: (context, state) => RecipeDetail(
+        recipe: state.extra as Recipe,
+      ),
+    ),
+    GoRoute(
+      path: '/create_category',
+      builder: (context, state) => CreateCategory(),
+    ),
   ],
 );
 
@@ -52,6 +71,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
+        ChangeNotifierProvider(create: (context) => RecipeProvider()),
         ChangeNotifierProvider(create: (context) => authProvider),
       ],
       child: MaterialApp.router(
