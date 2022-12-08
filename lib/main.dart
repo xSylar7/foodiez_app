@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/models/recipe_models.dart';
 import 'package:flutter_foodiez_app/pages/create_category_page.dart';
+import 'package:flutter_foodiez_app/pages/create_ingredient_page.dart';
+import 'package:flutter_foodiez_app/pages/create_recipe_page.dart';
+import 'package:flutter_foodiez_app/pages/my_recipes_page.dart';
 import 'package:flutter_foodiez_app/pages/recipe_detail.dart';
 import 'package:flutter_foodiez_app/pages/recipes_page.dart';
+import 'package:flutter_foodiez_app/providers/ingredient_provider.dart';
+import 'package:flutter_foodiez_app/providers/my_recipe_provider.dart';
 import 'package:flutter_foodiez_app/providers/recipe_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +50,14 @@ final router = GoRouter(
       builder: (context, state) => RecipesListPage(),
     ),
     GoRoute(
+      path: '/create_recipe',
+      builder: (context, state) => CreateRecipe(),
+    ),
+    GoRoute(
+      path: '/my_recipes',
+      builder: (context, state) => MyRecipesListPage(),
+    ),
+    GoRoute(
       path: '/recipe_detail',
       builder: (context, state) => RecipeDetail(
         recipe: state.extra as Recipe,
@@ -53,6 +66,10 @@ final router = GoRouter(
     GoRoute(
       path: '/create_category',
       builder: (context, state) => CreateCategory(),
+    ),
+    GoRoute(
+      path: '/create_ingredient',
+      builder: (context, state) => CreatIngredientPage(),
     ),
   ],
 );
@@ -72,6 +89,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => CategoryProvider()),
         ChangeNotifierProvider(create: (context) => RecipeProvider()),
+        ChangeNotifierProvider(create: (context) => MyRecipeProvider()),
+        ChangeNotifierProvider(create: (context) => IngredientProvider()),
         ChangeNotifierProvider(create: (context) => authProvider),
       ],
       child: MaterialApp.router(

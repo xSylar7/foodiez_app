@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_foodiez_app/providers/category_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -50,7 +48,7 @@ class _CreateCategoryState extends State<CreateCategory> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   controller: nameController,
-                  decoration: InputDecoration(hintText: "Title"),
+                  decoration: InputDecoration(hintText: "Category Name"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Field is required";

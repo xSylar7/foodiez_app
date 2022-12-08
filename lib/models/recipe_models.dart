@@ -3,9 +3,10 @@ import 'dart:convert';
 class Recipe {
   int id;
   String name;
-  String ingredients;
+  List<int> ingredients;
   int user;
   String image;
+  int category;
 
   Recipe({
     required this.id,
@@ -13,6 +14,7 @@ class Recipe {
     required this.ingredients,
     required this.user,
     required this.image,
+    required this.category,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class Recipe {
       'ingredients': ingredients,
       'user': user,
       'image': image,
+      'category': category,
     };
   }
 
@@ -29,9 +32,10 @@ class Recipe {
     return Recipe(
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
-      ingredients: map['ingredients'] ?? '',
+      ingredients: List<int>.from(map['ingredients']),
       user: map['user']?.toInt() ?? 0,
       image: map['image'] ?? '',
+      category: map['category']?.toInt() ?? 0,
     );
   }
 

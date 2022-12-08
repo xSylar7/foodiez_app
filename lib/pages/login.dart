@@ -4,6 +4,7 @@ import 'package:flutter_foodiez_app/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final usernameController = TextEditingController();
@@ -15,7 +16,9 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: (context.watch<AuthProvider>().username != null)
+            ? Text("My Profile")
+            : Text("Login"),
       ),
       //context.read<AuthProvider>().hasToken() == true
       body: (context.watch<AuthProvider>().username != null)
@@ -36,24 +39,30 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: 200,
                     ),
-                    TextFormField(
-                        controller: usernameController,
-                        decoration: InputDecoration(hintText: 'Username'),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Required field'; // || means or
-                          }
-                        }),
-                    TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(hintText: 'Password'),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Required field'; // || means or
-                          }
-                          return null;
-                        }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                      child: TextFormField(
+                          controller: usernameController,
+                          decoration: InputDecoration(hintText: 'Username'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Required field'; // || means or
+                            }
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                      child: TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(hintText: 'Password'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Required field'; // || means or
+                            }
+                            return null;
+                          }),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 50),
                       child: CupertinoButton.filled(

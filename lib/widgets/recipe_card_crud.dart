@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/models/recipe_models.dart';
 import 'package:go_router/go_router.dart';
@@ -30,6 +31,11 @@ class RecipeCard extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
+            Row(
+              children: [
+                CupertinoButton(child: Icon(Icons.delete), onPressed: () {})
+              ],
+            )
             // Text("${recipe.description}"),
           ],
         ),

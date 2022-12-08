@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/models/category_models.dart';
 import 'package:go_router/go_router.dart';

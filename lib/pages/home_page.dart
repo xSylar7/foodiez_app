@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_foodiez_app/providers/auth_provider.dart';
 
 import 'package:flutter_foodiez_app/providers/category_provider.dart';
 import 'package:flutter_foodiez_app/widgets/category_card.dart';
@@ -7,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,75 @@ class HomePage extends StatelessWidget {
             color: Colors.red,
           ),
         ],
+      ),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 111,
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black54,
+                        blurRadius: 10.0,
+                        offset: Offset(0.0, 0.75))
+                  ],
+                ),
+                child: context.watch<AuthProvider>().first_name != null
+                    ? Text(
+                        'Hey ${context.watch<AuthProvider>().first_name} 👋🏻',
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        "Home Page",
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Create Recipe'),
+              onTap: () {
+                context.push('/create_recipe');
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            ListTile(
+              title: const Text('My Recipes'),
+              onTap: () {
+                context.push("/my_recipes");
+                // Update the state of the app.
+                // ...
+              },
+            ),
+            (context.watch<AuthProvider>().username != null)
+                ? ListTile(
+                    title: const Text(
+                      'Logout',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.bold),
+                    ),
+                    onTap: () {
+                      context.read<AuthProvider>().logout();
+                      Navigator.pop(context);
+                    },
+                  )
+                : Container(),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Container(

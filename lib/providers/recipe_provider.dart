@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/client.dart';
+import 'package:flutter_foodiez_app/models/ingredient_models.dart';
 import 'package:flutter_foodiez_app/models/recipe_models.dart';
 
 class RecipeProvider extends ChangeNotifier {
@@ -15,11 +16,6 @@ class RecipeProvider extends ChangeNotifier {
     //     user: "khaled",
     //     image: "https://i.imgur.com/abalVsK.png"),
   ];
-
-  //   int id;
-  // String name;
-  // String ingredients;
-  // String user;
 
   RecipeProvider() {
     loadRecipes();
@@ -47,11 +43,15 @@ class RecipeProvider extends ChangeNotifier {
   Future<void> addRecipe({
     required String name,
     required File image,
+    required int category,
+    required List<Ingredient> ingredient,
   }) async {
     var response = await Client.dio.post("/categories/add/",
         data: FormData.fromMap({
           "name": name,
           "image": await MultipartFile.fromFile(image.path),
+          "category": category,
+          "ingredient": ingredient.map((e) => e.id).toList(),
         }));
 
     loadRecipes();

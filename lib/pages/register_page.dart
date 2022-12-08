@@ -3,6 +3,7 @@ import 'package:flutter_foodiez_app/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
   final usernameController = TextEditingController();
