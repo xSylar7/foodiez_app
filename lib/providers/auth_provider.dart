@@ -32,7 +32,7 @@ class AuthProvider extends ChangeNotifier {
 
       var pref = await SharedPreferences.getInstance();
       await pref.setString('token', token);
-
+      await hasToken();
       return true;
     } on DioError catch (e) {
       print(e);
@@ -62,7 +62,7 @@ class AuthProvider extends ChangeNotifier {
 
       var pref = await SharedPreferences.getInstance();
       await pref.setString('token', token);
-
+      await hasToken();
       return true;
     } on DioError catch (e) {
       print(e);
@@ -93,6 +93,8 @@ class AuthProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     username = null;
+    first_name = null;
+    id = null;
     notifyListeners();
   }
 }

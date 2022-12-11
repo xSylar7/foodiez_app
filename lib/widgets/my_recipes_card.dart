@@ -1,9 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/models/recipe_models.dart';
 import 'package:go_router/go_router.dart';
 
-class RecipeCard extends StatelessWidget {
-  RecipeCard({super.key, required this.recipe});
+class MyRecipeCard extends StatelessWidget {
+  MyRecipeCard({super.key, required this.recipe});
 
   final Recipe recipe;
 
@@ -33,12 +34,41 @@ class RecipeCard extends StatelessWidget {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: const EdgeInsets.only(bottom: 8.0),
               child: Text(
                 "${recipe.name}",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
+            Row(
+              children: [
+                CupertinoButton(
+                    child: Row(
+                      children: [
+                        Icon(Icons.edit),
+                        Text(
+                          "Edit",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    onPressed: () {}),
+                CupertinoButton(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          "Delete",
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    onPressed: () {}),
+              ],
+            )
           ],
         ),
       ),

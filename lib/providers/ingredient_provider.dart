@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/models/ingredient_models.dart';
 
@@ -32,12 +33,14 @@ class IngredientProvider extends ChangeNotifier {
 
   Future<void> addIngredient({
     required String name,
+    required int category,
   }) async {
     var response = await Client.dio.post("/ingredients/add/",
         data: FormData.fromMap({
           "name": name,
+          "category": category,
         }));
-
+    print(response);
     loadIngredient();
   }
 }

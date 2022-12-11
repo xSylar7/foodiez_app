@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import '../models/category_models.dart';
+import '../providers/category_provider.dart';
 import '../providers/ingredient_provider.dart';
 
 class CreatIngredientPage extends StatefulWidget {
@@ -13,25 +15,28 @@ class CreatIngredientPage extends StatefulWidget {
 
 class _CreatIngredientPageState extends State<CreatIngredientPage> {
   final nameController = TextEditingController();
-
+  Catg? selectedValue;
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    List<Catg> categories1;
+    categories1 = context.watch<CategoryProvider>().categories;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Ingredient"),
-        actions: [
-          CupertinoButton(
-            borderRadius: const BorderRadius.all(Radius.circular(150)),
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              context.push('/login');
-            },
-            child: Icon(CupertinoIcons.person_crop_circle),
-            color: Colors.red,
-          ),
-        ],
+        // actions: [
+        //   CupertinoButton(
+        //     borderRadius: const BorderRadius.all(Radius.circular(150)),
+        //     padding: EdgeInsets.zero,
+        //     onPressed: () {
+        //       context.push('/login');
+        //     },
+        //     child: Icon(CupertinoIcons.person_crop_circle),
+        //     color: Colors.red,
+        //   ),
+        // ],
       ),
       body: SafeArea(
         child: Form(
@@ -52,15 +57,30 @@ class _CreatIngredientPageState extends State<CreatIngredientPage> {
                   },
                 ),
               ),
+              DropdownButton<Catg>(
+                value: selectedValue,
+                icon: Icon(Icons.arrow_drop_down),
+                items: categories1
+                    .map((e) => DropdownMenuItem<Catg>(
+                          child: Text(e.name),
+                          value: e,
+                        ))
+                    .toList(),
+                onChanged: (Catg? value) {
+                  setState(() {
+                    selectedValue = value;
+                  });
+                },
+              ),
               Spacer(),
               ElevatedButton(
                   onPressed: () async {
-                    // form
+// form
 
                     if (formKey.currentState!.validate()) {
                       await context.read<IngredientProvider>().addIngredient(
-                            name: nameController.text,
-                          );
+                          name: nameController.text,
+                          category: selectedValue!.id);
                       context.pop();
                     }
                   },

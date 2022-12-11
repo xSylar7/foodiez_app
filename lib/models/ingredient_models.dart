@@ -3,7 +3,7 @@ import 'dart:convert';
 class Ingredient {
   int id;
   String name;
-  List<int> Category;
+  int Category;
 
   Ingredient({
     required this.id,
@@ -23,7 +23,7 @@ class Ingredient {
     return Ingredient(
       id: map['id']?.toInt() ?? 0,
       name: map['name'] ?? '',
-      Category: List<int>.from(map['Category']),
+      Category: map['Category']?.toInt() ?? 0,
     );
   }
 

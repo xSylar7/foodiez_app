@@ -3,36 +3,42 @@ import 'package:flutter_foodiez_app/models/category_models.dart';
 import 'package:go_router/go_router.dart';
 
 class CategoryCard extends StatelessWidget {
-  const CategoryCard({super.key, required this.category});
+  CategoryCard({super.key, required this.category});
 
   final Catg category;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: InkWell(
         onTap: () {
-          print("Card Pressed !");
+          print("${category.name} Pressed");
           context.push('/recipes');
         },
         child: Column(
           children: [
-            Spacer(),
-            Image.network(
-              category.image,
-              height: 112,
-              width: double.infinity,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20), topLeft: Radius.circular(20)),
+              child: Image.network(
+                category.image,
+                height: 112,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
                 "${category.name}",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
-            // Text("${category.description}"),
           ],
         ),
       ),

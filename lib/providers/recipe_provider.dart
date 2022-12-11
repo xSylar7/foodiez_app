@@ -45,15 +45,17 @@ class RecipeProvider extends ChangeNotifier {
     required File image,
     required int category,
     required List<Ingredient> ingredient,
+    required String description,
   }) async {
-    var response = await Client.dio.post("/categories/add/",
+    var response = await Client.dio.post("/recipes/add/",
         data: FormData.fromMap({
           "name": name,
           "image": await MultipartFile.fromFile(image.path),
           "category": category,
-          "ingredient": ingredient.map((e) => e.id).toList(),
+          "ingredients": ingredient.map((e) => e.id).toList(),
+          "description": description,
         }));
-
+    print(response);
     loadRecipes();
   }
 }

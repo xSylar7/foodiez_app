@@ -15,17 +15,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Foodiez"),
-        actions: [
-          CupertinoButton(
-            borderRadius: const BorderRadius.all(Radius.circular(150)),
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              context.push('/login');
-            },
-            child: Icon(CupertinoIcons.person_crop_circle),
-            color: Colors.red,
-          ),
-        ],
+        // actions: [
+        //   CupertinoButton(
+        //     borderRadius: const BorderRadius.all(Radius.circular(150)),
+        //     padding: EdgeInsets.zero,
+        //     onPressed: () {
+        //       context.push('/login');
+        //     },
+        //     child: Icon(CupertinoIcons.person_crop_circle),
+        //     color: Colors.red,
+        //   ),
+        // ],
       ),
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -64,22 +64,45 @@ class HomePage extends StatelessWidget {
                       ),
               ),
             ),
-            ListTile(
-              title: const Text('Create Recipe'),
-              onTap: () {
-                context.push('/create_recipe');
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('My Recipes'),
-              onTap: () {
-                context.push("/my_recipes");
-                // Update the state of the app.
-                // ...
-              },
-            ),
+            (context.watch<AuthProvider>().username == null)
+                ? ListTile(
+                    title: const Text('Login'),
+                    onTap: () {
+                      context.push('/login');
+                      Navigator.pop(context);
+                    },
+                  )
+                : Container(),
+            (context.watch<AuthProvider>().username != null)
+                ? ListTile(
+                    title: const Text('Create Category'),
+                    onTap: () {
+                      context.push('/create_category');
+                      // Update the state of the app.
+                      // ...
+                    },
+                  )
+                : Container(),
+            (context.watch<AuthProvider>().username != null)
+                ? ListTile(
+                    title: const Text('Create Recipe'),
+                    onTap: () {
+                      context.push('/create_recipe');
+                      // Update the state of the app.
+                      // ...
+                    },
+                  )
+                : Container(),
+            (context.watch<AuthProvider>().username != null)
+                ? ListTile(
+                    title: const Text('My Recipes'),
+                    onTap: () {
+                      context.push("/my_recipes");
+                      // Update the state of the app.
+                      // ...
+                    },
+                  )
+                : Container(),
             (context.watch<AuthProvider>().username != null)
                 ? ListTile(
                     title: const Text(
@@ -98,23 +121,19 @@ class HomePage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.all(12),
           child: GridView.builder(
             itemCount: context.watch<CategoryProvider>().categories.length,
             itemBuilder: (context, index) => CategoryCard(
               category: context.watch<CategoryProvider>().categories[index],
             ),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 22
+                crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12
                 // childAspectRatio: MediaQuery.of(context).size.width /
                 //     (MediaQuery.of(context).size.height),
                 ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push('/create_category'),
-        child: Icon(Icons.add),
       ),
     );
   }

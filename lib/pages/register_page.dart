@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/providers/auth_provider.dart';
 import 'package:go_router/go_router.dart';

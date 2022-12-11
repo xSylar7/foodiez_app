@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_foodiez_app/providers/auth_provider.dart';
@@ -16,9 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: (context.watch<AuthProvider>().username != null)
-            ? Text("My Profile")
-            : Text("Login"),
+        title: Text("Login"),
       ),
       //context.read<AuthProvider>().hasToken() == true
       body: (context.watch<AuthProvider>().username != null)
@@ -28,6 +28,7 @@ class LoginPage extends StatelessWidget {
                 child: Text("Logout"),
                 onPressed: () {
                   context.read<AuthProvider>().logout();
+                  context.pop();
                 },
               ),
             ))

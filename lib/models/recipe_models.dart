@@ -7,7 +7,7 @@ class Recipe {
   int user;
   String image;
   int category;
-
+  String description;
   Recipe({
     required this.id,
     required this.name,
@@ -15,6 +15,7 @@ class Recipe {
     required this.user,
     required this.image,
     required this.category,
+    required this.description,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,6 +26,7 @@ class Recipe {
       'user': user,
       'image': image,
       'category': category,
+      'description': description,
     };
   }
 
@@ -36,6 +38,7 @@ class Recipe {
       user: map['user']?.toInt() ?? 0,
       image: map['image'] ?? '',
       category: map['category']?.toInt() ?? 0,
+      description: map['description'] ?? '',
     );
   }
 

@@ -27,28 +27,39 @@ class _CreateCategoryState extends State<CreateCategory> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Category"),
-        actions: [
-          CupertinoButton(
-            borderRadius: const BorderRadius.all(Radius.circular(150)),
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              context.push('/login');
-            },
-            child: Icon(CupertinoIcons.person_crop_circle),
-            color: Colors.red,
-          ),
-        ],
+        // actions: [
+        //   CupertinoButton(
+        //     borderRadius: const BorderRadius.all(Radius.circular(150)),
+        //     padding: EdgeInsets.zero,
+        //     onPressed: () {
+        //       context.push('/login');
+        //     },
+        //     child: Icon(CupertinoIcons.person_crop_circle),
+        //     color: Colors.red,
+        //   ),
+        // ],
       ),
       body: SafeArea(
         child: Form(
           key: formKey,
           child: Column(
             children: [
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   controller: nameController,
-                  decoration: InputDecoration(hintText: "Category Name"),
+                  decoration: InputDecoration(
+                    hintText: "Category Name",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 3, color: Colors.red),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 1, color: Colors.red),
+                      borderRadius: BorderRadius.circular(50.0),
+                    ),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Field is required";
@@ -58,33 +69,57 @@ class _CreateCategoryState extends State<CreateCategory> {
                   },
                 ),
               ),
-              if (imageFile != null)
-                Image.file(
-                  imageFile!,
-                  width: 100,
-                  height: 100,
-                )
-              else
-                Container(
-                  width: 100,
-                  height: 100,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(35),
+                    border: Border.all(width: 1, color: Colors.red),
+                  ),
+                  child: Row(
+                    children: [
+                      if (imageFile != null)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 32),
+                          child: Image.file(
+                            imageFile!,
+                            width: 130,
+                            height: 130,
+                          ),
+                        )
+                      else
+                        Container(
+                          width: 130,
+                          height: 130,
+                        ),
+                      Spacer(),
+                      CupertinoButton(
+                        onPressed: () async {
+                          var file = await ImagePicker()
+                              .pickImage(source: ImageSource.gallery);
+
+                          if (file == null) {
+                            print("Use didnt select a file");
+                            return;
+                          }
+
+                          setState(() {
+                            imageFile = File(file.path);
+                            imageError = null;
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.add),
+                            Text("Add Image"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ElevatedButton(
-                  onPressed: () async {
-                    var file = await ImagePicker()
-                        .pickImage(source: ImageSource.gallery);
-
-                    if (file == null) {
-                      print("Use didnt select a file");
-                      return;
-                    }
-
-                    setState(() {
-                      imageFile = File(file.path);
-                      imageError = null;
-                    });
-                  },
-                  child: Text("Add Image")),
+              ),
               if (imageError != null)
                 Text(
                   imageError!,

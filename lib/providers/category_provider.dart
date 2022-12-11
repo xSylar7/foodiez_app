@@ -42,7 +42,7 @@ class CategoryProvider extends ChangeNotifier {
           "name": name,
           "image": await MultipartFile.fromFile(image.path),
         }));
-
+    print(response);
     loadCategories();
   }
 }
